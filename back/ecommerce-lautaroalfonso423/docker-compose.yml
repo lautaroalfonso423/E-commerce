@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  nestapp:
+    build: ./
+    ports: 
+      - "3001:3000"
+    env_file:
+      - .env.development
+    depends_on:
+      - postgresdb
+    networks:
+      - nestnetwork
+   
+  postgresdb:
+      image: postgres
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      env_file:
+        - .env.development
+      networks:
+        - nestnetwork
+    
+volumes:
+  pgdata:
+
+networks:
+  nestnetwork:  
+    driver: bridge
+
